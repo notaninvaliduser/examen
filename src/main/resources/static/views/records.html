@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+
+    <script src="js/lib/jquery-3.4.1.min.js"></script>
+    <script src="js/lib/bootstrap.min.js"></script>
+    <script src="js/lib/ui-bootstrap-tpls-2.5.0.min.js"></script>
+    <script src="js/lib/angular.min.js"></script>
+    <script src="js/app/record/recordApp.js"></script>
+
+    <script>
+        $('#addModal').on('shown.bs.modal', function () {
+          $('#myInput').trigger('focus')
+        })
+        $('#editModal').on('shown.bs.modal', function () {
+          $('#myInput').trigger('focus')
+        })
+        $('#deleteModal').on('shown.bs.modal', function () {
+          $('#myInput').trigger('focus')
+        })
+    </script>
+    <title>record</title>
+</head>
+<body ng-app="recordModule">
+
+<div ng-controller="recordController">
+    <!-- Button trigger modal -->
+    <div class="container">
+
+        <div class="row">
+            <div class="col-md-8">
+            <h1>record</h1>
+            </div>
+            <div class="col-md-4">
+                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addModal" style="text-align:right">Add new record</button>
+            </div>
+            </div>
+        <table class="table table-striped ">
+            <thead class="thead-dark">
+            <th>Nombre del Album</th>
+            <th>Nombre del Artista</th>
+            <th>Numero de canciones</th>
+            <th>Opciones</th>
+            </thead>
+            <tbody>
+            <tr ng-repeat="record in records">
+                <td>{{record.album_title}}</td>
+                <td>{{record.artist_name}}</td>
+                <td>{{record.song_count}}</td>
+
+                <td>
+                    <!-- Boton editar-->
+                    <button type="button" class="btn btn-warning" ng-click="selectEdit(record)" data-toggle="modal" data-target="#editModal">Edit record</button>
+
+                    <!-- Boton remover-->
+                    <button type="button" class="btn btn-danger" ng-click="selectEdit(record)" data-toggle="modal" data-target="#deleteModal">Delete record</button>
+
+
+                </td>
+            </tr>
+            </tbody>
+        </table>
+        <div class="modal fade" id="addModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Add</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <form>
+                            <div class="form-group">
+                                <label class="col-form-label">Nombre del Album:</label>
+                                <input type="text" class="form-control" ng-model="record.album_title">
+                            </div>
+                            <div class="form-group">
+                                <label  class="col-form-label">Nombre del Artista:</label>
+                                <input type="text" class="form-control" ng-model="record.artist_name">
+                            </div>
+                            <div class="form-group">
+                                <label form="message-text" class="col-form-label">Numero de Canciones:</label>
+                                <input type="text" class="form-control" ng-model="record.song_count">
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary" ng-click="add(record)" >Save</button>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="editModalLabel">Edit</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <form>
+                            <div class="form-group">
+                                <label class="col-form-label">Nombre del Album:</label>
+                                <input type="text" class="form-control" ng-model="record.album_title">
+                            </div>
+                            <div class="form-group">
+                                <label  class="col-form-label">Nombre del Artista:</label>
+                                <input type="text" class="form-control" ng-model="record.artist_name">
+                            </div>
+                            <div class="form-group">
+                                <label form="message-text" class="col-form-label">Numero de Canciones:</label>
+                                <input type="text" class="form-control" ng-model="record.song_count">
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary" data-dismiss="modal" ng-click="edit(record)" >Save</button>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title" id="myModalLabel">Borrar registro</h4>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    </div>
+                    <div class="modal-body">
+                        <form>
+                            <div class="form-group">
+                                <label class="col-form-label">Nombre del Album:</label>
+                                <input type="text" class="form-control" ng-model="record.album_title" disabled>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary" data-dismiss="modal" ng-click="delete(record)">Delete</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+</div>
+
+</body>
+</html>
